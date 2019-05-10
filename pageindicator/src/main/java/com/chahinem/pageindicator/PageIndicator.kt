@@ -2,8 +2,12 @@ package com.chahinem.pageindicator
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.RectF
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
@@ -27,6 +31,8 @@ class PageIndicator @JvmOverloads constructor(
 
   private val defaultPaint = Paint().apply { isAntiAlias = true }
   private val selectedPaint = Paint().apply { isAntiAlias = true }
+  private val defaultPaintBitmap = Paint().apply { isAntiAlias = true }
+  private val selectedPaintBitmap = Paint().apply { isAntiAlias = true }
 
   private val dotSize: Int
   private val dotSizeMap: Map<Byte, Int>
@@ -39,6 +45,8 @@ class PageIndicator @JvmOverloads constructor(
   private var scrollAmount: Int = 0
   private var scrollAnimator: ValueAnimator? = null
   private var initialPadding: Int = 0
+
+  private var drawables: Array<Int?>? = null
 
   private lateinit var scrollListener: RecyclerView.OnScrollListener
   private lateinit var pageChangeListener: ViewPager.OnPageChangeListener
@@ -53,6 +61,7 @@ class PageIndicator @JvmOverloads constructor(
           dotSizeMap,
           this)
 
+      drawables = arrayOfNulls<Int?>(value)
       dotSizes = IntArray(value)
       dotManager?.let { it.dots.forEachIndexed { index, dot -> dotSizes[index] = it.dotSizeFor(dot) } }
       dotAnimators = Array(value) { ValueAnimator() }
@@ -86,6 +95,16 @@ class PageIndicator @JvmOverloads constructor(
     selectedPaint.color = ta.getColor(
         R.styleable.PageIndicator_piSelectedColor,
         ContextCompat.getColor(getContext(), R.color.pi_selected_color))
+
+    defaultPaintBitmap.colorFilter = PorterDuffColorFilter(ta.getColor(
+        R.styleable.PageIndicator_piDefaultColor,
+        ContextCompat.getColor(getContext(), R.color.pi_default_color)), PorterDuff.Mode.SRC_IN)
+
+    selectedPaintBitmap.colorFilter = PorterDuffColorFilter(ta.getColor(
+        R.styleable.PageIndicator_piSelectedColor,
+        ContextCompat.getColor(getContext(), R.color.pi_selected_color)), PorterDuff.Mode.SRC_IN)
+
+
     animInterpolator = AnimationUtils.loadInterpolator(context, ta.getResourceId(
         R.styleable.PageIndicator_piAnimInterpolator,
         R.anim.pi_default_interpolator))
@@ -106,15 +125,41 @@ class PageIndicator @JvmOverloads constructor(
 
     paddingStart += (dotSize + dotSpacing) * start
     (start until end).forEach {
-      canvas?.drawCircle(
-          paddingStart + dotSize / 2f - scrollAmount,
-          dotSize / 2f,
-          dotSizes[it] / 2f,
-          when (dotManager?.dots?.get(it)) {
-            BYTE_6 -> selectedPaint
-            else -> defaultPaint
-          })
-      paddingStart += dotSize + dotSpacing
+      if (drawables?.get(it) == null) {
+        canvas?.drawCircle(
+            paddingStart + dotSize / 2f - scrollAmount,
+            dotSize / 2f,
+            dotSizes[it] / 2f,
+            when (dotManager?.dots?.get(it)) {
+              BYTE_6 -> selectedPaint
+              else -> defaultPaint
+            })
+        paddingStart += dotSize + dotSpacing
+      } else {
+        val drawableInt = drawables?.get(it)
+        val cx = (paddingStart - scrollAmount).toFloat()
+        if (drawableInt != null) {
+          val bitmap = BitmapFactory.decodeResource(resources, drawableInt)
+          val ratio = bitmap.height.toFloat() / bitmap.width.toFloat()
+          val cy = (dotSize - dotSizes[it].toFloat()) / 2
+          canvas?.drawBitmap(bitmap,
+              null,
+              RectF(cx, cy, cx + (dotSizes[it].toFloat() / ratio), cy + dotSizes[it].toFloat()),
+              when (dotManager?.dots?.get(it)) {
+                BYTE_6 -> selectedPaintBitmap
+                else -> defaultPaintBitmap
+              })
+          paddingStart += (dotSize / ratio + dotSpacing).toInt()
+        }
+
+//        drawableInt?.let { drawable ->
+//          val d = ContextCompat.getDrawable(this.context, drawable)
+//          d?.setBounds(left, top, right, bottom)
+//          canvas?.let {
+//            d?.draw(it)
+//          }
+//        }
+      }
     }
   }
 
@@ -154,6 +199,13 @@ class PageIndicator @JvmOverloads constructor(
         invalidate()
       }
       start()
+    }
+  }
+
+  fun setDrawable(drawable: Int, position: Int) {
+    if ((drawables?.size ?: -1) >= position) {
+      drawables?.set(position, drawable)
+      invalidate()
     }
   }
 

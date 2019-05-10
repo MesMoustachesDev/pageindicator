@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     adapter.swapData(LIST_ITEMS)
     pageIndicator attachTo list
 
+    pageIndicator.setDrawable(R.drawable.ic_camera, 0)
+    pageIndicator.setDrawable(R.drawable.ic_camera, 3)
+
     // ViewPager
     val myPagerAdapter = MyPagerAdapter(picasso, LIST_ITEMS)
     pager.adapter = myPagerAdapter

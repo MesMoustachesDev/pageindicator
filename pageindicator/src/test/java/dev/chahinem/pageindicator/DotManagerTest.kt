@@ -1,5 +1,6 @@
-package com.chahinem.pageindicator
+package dev.chahinem.pageindicator
 
+import dev.mesmoustaches.pageindicator.DotManager
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -16,18 +17,54 @@ class DotManagerTest {
   }
 
   @Test fun init_isCorrect() {
-    assertEquals("6", DotManager(1, 0, 0, 0, dotSizes).dots())
-    assertEquals("65", DotManager(2, 0, 0, 0, dotSizes).dots())
-    assertEquals("655", DotManager(3, 0, 0, 0, dotSizes).dots())
-    assertEquals("6555", DotManager(4, 0, 0, 0, dotSizes).dots())
-    assertEquals("65555", DotManager(5, 0, 0, 0, dotSizes).dots())
-    assertEquals("655542", DotManager(6, 0, 0, 0, dotSizes).dots())
-    assertEquals("6555420", DotManager(7, 0, 0, 0, dotSizes).dots())
-    assertEquals("65554200", DotManager(8, 0, 0, 0, dotSizes).dots())
+    assertEquals("6", DotManager(1,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("65", DotManager(2,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("655", DotManager(3,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("6555", DotManager(4,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("65555", DotManager(5,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("655542", DotManager(6,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("6555420", DotManager(7,
+        0,
+        0,
+        0,
+        dotSizes).dots())
+    assertEquals("65554200", DotManager(8,
+        0,
+        0,
+        0,
+        dotSizes).dots())
   }
 
   @Test fun goToNext_small() {
-    val dotManager = DotManager(5, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(5,
+        0,
+        0,
+        0,
+        dotSizes)
     assertEquals("65555", dotManager.dots())
     dotManager.goToNext()
     assertEquals("56555", dotManager.dots())
@@ -40,7 +77,11 @@ class DotManagerTest {
   }
 
   @Test fun goToNext_large6() {
-    val dotManager = DotManager(6, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(6,
+        0,
+        0,
+        0,
+        dotSizes)
     assertEquals("655542", dotManager.dots())
     dotManager.goToNext()
     assertEquals("565542", dotManager.dots())
@@ -55,7 +96,11 @@ class DotManagerTest {
   }
 
   @Test fun goToNext_large8() {
-    val dotManager = DotManager(8, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(8,
+        0,
+        0,
+        0,
+        dotSizes)
     assertEquals("65554200", dotManager.dots())
     dotManager.goToNext()
     assertEquals("56554200", dotManager.dots())
@@ -74,7 +119,11 @@ class DotManagerTest {
   }
 
   @Test fun goToPrevious_small() {
-    val dotManager = DotManager(5, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(5,
+        0,
+        0,
+        0,
+        dotSizes)
     assertEquals("65555", dotManager.dots())
     dotManager.goToNext()
     dotManager.goToNext()
@@ -92,7 +141,11 @@ class DotManagerTest {
   }
 
   @Test fun goToPrevious_large6() {
-    val dotManager = DotManager(6, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(6,
+        0,
+        0,
+        0,
+        dotSizes)
     dotManager.goToNext()
     dotManager.goToNext()
     dotManager.goToNext()
@@ -112,7 +165,11 @@ class DotManagerTest {
   }
 
   @Test fun goToPrevious_large8() {
-    val dotManager = DotManager(8, 0, 0, 0, dotSizes)
+    val dotManager = DotManager(8,
+        0,
+        0,
+        0,
+        dotSizes)
     assertEquals("65554200", dotManager.dots())
     dotManager.goToNext()
     dotManager.goToNext()

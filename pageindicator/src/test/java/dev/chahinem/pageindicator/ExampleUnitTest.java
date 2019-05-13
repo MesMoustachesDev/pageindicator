@@ -1,4 +1,4 @@
-package com.chahinem.pageindicator;
+package dev.chahinem.pageindicator;
 
 import org.junit.Test;
 

@@ -89,3 +89,4 @@ hs_err_pid*
 # keep code style
 !.idea/codeStyles/
 !.idea/codeStyles/**
+/.idea/

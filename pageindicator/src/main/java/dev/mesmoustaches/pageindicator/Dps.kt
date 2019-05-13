@@ -1,4 +1,4 @@
-package com.chahinem.pageindicator
+package dev.mesmoustaches.pageindicator
 
 import android.content.res.Resources
 

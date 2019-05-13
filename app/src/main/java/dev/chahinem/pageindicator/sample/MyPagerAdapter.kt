@@ -1,4 +1,4 @@
-package com.chahinem.pageindicator.sample
+package dev.chahinem.pageindicator.sample
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
-import com.chahinem.pageindicator.sample.MyAdapter.MyItem
+import com.chahinem.pageindicator.sample.R.color
+import com.chahinem.pageindicator.sample.R.id
+import com.chahinem.pageindicator.sample.R.layout
+import dev.chahinem.pageindicator.sample.MyAdapter.MyItem
 import com.squareup.picasso.Picasso
 
 class MyPagerAdapter(private val picasso: Picasso,
@@ -19,16 +22,16 @@ class MyPagerAdapter(private val picasso: Picasso,
   override fun instantiateItem(container: ViewGroup, position: Int): Any {
     val view = LayoutInflater
         .from(container.context)
-        .inflate(R.layout.item_card, container, false)
+        .inflate(layout.item_card, container, false)
 
     val item = items[position]
-    val title: TextView = view.findViewById(R.id.title)
-    val caption: TextView = view.findViewById(R.id.caption)
-    val image: ImageView = view.findViewById(R.id.image)
+    val title: TextView = view.findViewById(id.title)
+    val caption: TextView = view.findViewById(id.caption)
+    val image: ImageView = view.findViewById(id.image)
 
     picasso
         .load(item.image)
-        .placeholder(R.color.colorPrimaryDark)
+        .placeholder(color.colorPrimaryDark)
         .fit()
         .centerCrop()
         .into(image)

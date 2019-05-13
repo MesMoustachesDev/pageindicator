@@ -1,9 +1,11 @@
-package com.chahinem.pageindicator.sample
+package dev.chahinem.pageindicator.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.chahinem.pageindicator.sample.MyAdapter.MyItem
+import com.chahinem.pageindicator.sample.R.drawable
+import com.chahinem.pageindicator.sample.R.layout
+import dev.chahinem.pageindicator.sample.MyAdapter.MyItem
 import com.squareup.picasso.Picasso.Builder
 import kotlinx.android.synthetic.main.activity_main.leftBtn
 import kotlinx.android.synthetic.main.activity_main.list
@@ -17,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
+    setContentView(layout.activity_main)
 
     val picasso = Builder(this).build()
 
@@ -28,11 +30,12 @@ class MainActivity : AppCompatActivity() {
     adapter.swapData(LIST_ITEMS)
     pageIndicator attachTo list
 
-    pageIndicator.setDrawable(R.drawable.ic_camera, 0)
-    pageIndicator.setDrawable(R.drawable.ic_camera, 3)
+    pageIndicator.setDrawable(drawable.ic_camera, 0)
+    pageIndicator.setDrawable(drawable.ic_camera, 3)
 
     // ViewPager
-    val myPagerAdapter = MyPagerAdapter(picasso, LIST_ITEMS)
+    val myPagerAdapter = MyPagerAdapter(picasso,
+        LIST_ITEMS)
     pager.adapter = myPagerAdapter
     pagerPageIndicator attachTo pager
 

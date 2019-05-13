@@ -29,7 +29,7 @@
         tools:listitem="@layout/item_card"
         />
 
-    <com.chahinem.pageindicator.PageIndicator
+    <dev.mesmoustaches.pageindicator.PageIndicator
         android:id="@+id/pageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_height="360dp"
         />
 
-    <com.chahinem.pageindicator.PageIndicator
+    <dev.mesmoustaches.pageindicator.PageIndicator
         android:id="@+id/pagerPageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         style="@style/TextAppearance.AppCompat.Title"
         />
 
-    <com.chahinem.pageindicator.PageIndicator
+    <dev.mesmoustaches.pageindicator.PageIndicator
         android:id="@+id/manualPageIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

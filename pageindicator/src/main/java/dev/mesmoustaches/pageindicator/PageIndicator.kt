@@ -1,4 +1,4 @@
-package com.chahinem.pageindicator
+package dev.mesmoustaches.pageindicator
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -18,7 +18,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.chahinem.pageindicator.DotManager.TargetScrollListener
+import com.chahinem.pageindicator.R.anim
+import com.chahinem.pageindicator.R.color
+import com.chahinem.pageindicator.R.styleable
+import dev.mesmoustaches.pageindicator.DotManager.TargetScrollListener
 
 class PageIndicator @JvmOverloads constructor(
     context: Context,
@@ -74,40 +77,48 @@ class PageIndicator @JvmOverloads constructor(
     }
 
   init {
-    val ta = getContext().obtainStyledAttributes(attrs, R.styleable.PageIndicator)
+    val ta = getContext().obtainStyledAttributes(attrs,
+        styleable.PageIndicator)
     dotSizeMap = mapOf(
-        BYTE_6 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize1, 6.dp),
-        BYTE_5 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize2, 5f.dp),
-        BYTE_4 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize3, 4.5f.dp),
-        BYTE_3 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize4, 3f.dp),
-        BYTE_2 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize5, 2.5f.dp),
-        BYTE_1 to ta.getDimensionPixelSize(R.styleable.PageIndicator_piSize6, .5f.dp)
+        BYTE_6 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize1, 6.dp),
+        BYTE_5 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize2, 5f.dp),
+        BYTE_4 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize3, 4.5f.dp),
+        BYTE_3 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize4, 3f.dp),
+        BYTE_2 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize5, 2.5f.dp),
+        BYTE_1 to ta.getDimensionPixelSize(
+            styleable.PageIndicator_piSize6, .5f.dp)
     )
     dotSize = dotSizeMap.values.max() ?: 0
-    dotSpacing = ta.getDimensionPixelSize(R.styleable.PageIndicator_piDotSpacing, 3.dp)
-    dotBound = ta.getDimensionPixelSize(R.styleable.PageIndicator_piDotBound, 40.dp)
+    dotSpacing = ta.getDimensionPixelSize(styleable.PageIndicator_piDotSpacing, 3.dp)
+    dotBound = ta.getDimensionPixelSize(styleable.PageIndicator_piDotBound, 40.dp)
 
     animDuration = ta.getInteger(
-        R.styleable.PageIndicator_piAnimDuration, DEFAULT_ANIM_DURATION).toLong()
+        styleable.PageIndicator_piAnimDuration,
+        DEFAULT_ANIM_DURATION).toLong()
     defaultPaint.color = ta.getColor(
-        R.styleable.PageIndicator_piDefaultColor,
-        ContextCompat.getColor(getContext(), R.color.pi_default_color))
+        styleable.PageIndicator_piDefaultColor,
+        ContextCompat.getColor(getContext(), color.pi_default_color))
     selectedPaint.color = ta.getColor(
-        R.styleable.PageIndicator_piSelectedColor,
-        ContextCompat.getColor(getContext(), R.color.pi_selected_color))
+        styleable.PageIndicator_piSelectedColor,
+        ContextCompat.getColor(getContext(), color.pi_selected_color))
 
     defaultPaintBitmap.colorFilter = PorterDuffColorFilter(ta.getColor(
-        R.styleable.PageIndicator_piDefaultColor,
-        ContextCompat.getColor(getContext(), R.color.pi_default_color)), PorterDuff.Mode.SRC_IN)
+        styleable.PageIndicator_piDefaultColor,
+        ContextCompat.getColor(getContext(), color.pi_default_color)), PorterDuff.Mode.SRC_IN)
 
     selectedPaintBitmap.colorFilter = PorterDuffColorFilter(ta.getColor(
-        R.styleable.PageIndicator_piSelectedColor,
-        ContextCompat.getColor(getContext(), R.color.pi_selected_color)), PorterDuff.Mode.SRC_IN)
+        styleable.PageIndicator_piSelectedColor,
+        ContextCompat.getColor(getContext(), color.pi_selected_color)), PorterDuff.Mode.SRC_IN)
 
 
     animInterpolator = AnimationUtils.loadInterpolator(context, ta.getResourceId(
-        R.styleable.PageIndicator_piAnimInterpolator,
-        R.anim.pi_default_interpolator))
+        styleable.PageIndicator_piAnimInterpolator,
+        anim.pi_default_interpolator))
     ta.recycle()
   }
 

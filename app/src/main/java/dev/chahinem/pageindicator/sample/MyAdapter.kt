@@ -1,4 +1,4 @@
-package com.chahinem.pageindicator.sample
+package dev.chahinem.pageindicator.sample
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.chahinem.pageindicator.sample.MyAdapter.MyViewHolder
+import com.chahinem.pageindicator.sample.R.color
+import com.chahinem.pageindicator.sample.R.id
+import com.chahinem.pageindicator.sample.R.layout
+import dev.chahinem.pageindicator.sample.MyAdapter.MyViewHolder
 import com.squareup.picasso.Picasso
 
 class MyAdapter(private val picasso: Picasso) : RecyclerView.Adapter<MyViewHolder>() {
@@ -18,7 +21,7 @@ class MyAdapter(private val picasso: Picasso) : RecyclerView.Adapter<MyViewHolde
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(
       LayoutInflater
           .from(parent.context)
-          .inflate(R.layout.item_card, parent, false))
+          .inflate(layout.item_card, parent, false))
 
   override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
     holder.bind(picasso, items[holder.adapterPosition])
@@ -32,14 +35,14 @@ class MyAdapter(private val picasso: Picasso) : RecyclerView.Adapter<MyViewHolde
 
   class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private val title: TextView = itemView.findViewById(R.id.title)
-    private val caption: TextView = itemView.findViewById(R.id.caption)
-    private val image: ImageView = itemView.findViewById(R.id.image)
+    private val title: TextView = itemView.findViewById(id.title)
+    private val caption: TextView = itemView.findViewById(id.caption)
+    private val image: ImageView = itemView.findViewById(id.image)
 
     fun bind(picasso: Picasso, item: MyItem) {
       picasso
           .load(item.image)
-          .placeholder(R.color.colorPrimaryDark)
+          .placeholder(color.colorPrimaryDark)
           .fit()
           .centerCrop()
           .into(image)
